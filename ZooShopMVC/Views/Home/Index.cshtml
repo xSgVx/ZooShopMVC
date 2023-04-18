@@ -1,0 +1,48 @@
+﻿@model ZooShopMVC.Models.ViewModels.HomeVM
+
+<div class="container">
+
+    <div class="d-flex btn-group text-center justify-content-md-center" role="group">
+        @*<button class="btn btn-dark fa-filter" data-filter="All">All</button>*@
+
+        <button type="button" class="btn btn-dark filter-button" data-filter="all">All</button>
+        @foreach (var category in Model.Categories)
+        { 
+            <button class="btn btn-outline-secondary filter-button" data-filter="@category.Name.Replace(' ', '_')">
+                @category.Name
+            </button>
+
+        }
+    </div>
+
+    <br />
+
+    <div class="row my-2">
+        @foreach (var prod in Model.Products)
+        {
+            <partial name="_IndividualProductCard" model="prod"/>
+        }
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+            $(document).ready(function () {
+
+                $(".filter-button").click(function () {
+
+                    var value = $(this).attr('data-filter');
+                    if (value == "all") {
+                        $('.filter').show('1000');
+                    }
+                    else {
+                        $(".filter").not('.' + value).hide('3000');
+                        $('.filter').filter('.' + value).show('3000');
+
+                    }
+                });
+
+            });
+    </script>
+}
